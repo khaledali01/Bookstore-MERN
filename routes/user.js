@@ -1,9 +1,9 @@
+const { signup } = require("../controllers/user");
+
 const express = require("express");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Server is working.");
-});
+router.post("/signup", signup);
 
 module.exports = router;
