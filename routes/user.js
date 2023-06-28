@@ -1,11 +1,11 @@
 const { userById } = require("../controllers/user");
-const { requireSignIn } = require("../controllers/auth");
+const { requireSignIn, isAuth, isAdmin } = require("../controllers/auth");
 
 const express = require("express");
 
 const router = express.Router();
 
-router.get("/secret/:userId", requireSignIn, (req, res) => {
+router.get("/secret/:userId", requireSignIn, isAuth, (req, res) => {
   res.json({
     user: req.profile,
   });
