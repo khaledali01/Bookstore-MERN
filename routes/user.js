@@ -1,5 +1,5 @@
 const { userById } = require("../controllers/user");
-const { requireSignIn, isAuth, isAdmin } = require("../controllers/auth");
+const { requireSignIn, isAuth } = require("../controllers/auth");
 
 const express = require("express");
 
