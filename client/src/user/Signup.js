@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import Layout from "../core/Layout";
-import { API } from "../config";
+import {signup} from '../auth/index'
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -57,25 +57,7 @@ const Signup = () => {
         console.log(error);
       });
   };
-
-  const signup = (user) => {
-    return fetch(`${API}/signup`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  
   const showError = () => {
     return (
       <div
