@@ -1,8 +1,9 @@
 import React, { useReducer } from "react";
 import Layout from "../core/Layout";
+import { API } from "../config";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
-
   const initialState = {
     name: "",
     email: "",
@@ -28,12 +29,83 @@ const Signup = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const { name, email, password, error, success } = state;
+
+  const clickSubmit = (event) => {
+    event.preventDefault();
+    signup({ name, email, password })
+      .then((data) => {
+        if (data.error) {
+          dispatch({
+            type: "SET_VALUES",
+            payload: { error: data.error },
+          });
+        } else {
+          dispatch({
+            type: "SET_VALUES",
+            payload: {
+              name: "",
+              email: "",
+              password: "",
+              error: "",
+              success: true,
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const signup = (user) => {
+    return fetch(`${API}/signup`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const showError = () => {
+    return (
+      <div
+        className="alert alert-danger"
+        style={{ display: error ? "" : "none" }}
+      >
+        {error}
+      </div>
+    );
+  };
+
+  const showSuccess = () => {
+    return (
+      <div
+        className="alert alert-info"
+        style={{ display: success ? "" : "none" }}
+      >
+        New Account is created. Please <Link to="/signin">Signin</Link>
+      </div>
+    );
+  };
+
   return (
     <Layout
       title="Sign Up"
       description="Sign Up to Books E-Commerce"
       className="container col-md-8 offset-md-2"
     >
+      {showError()}
+      {showSuccess()}
       <h1>Sign Up</h1>
       <form>
         <div className="form-group">
@@ -42,6 +114,7 @@ const Signup = () => {
             onChange={handleChange("name")}
             type="text"
             className="form-control"
+            value={name}
           />
         </div>
         <div className="form-group">
@@ -50,6 +123,7 @@ const Signup = () => {
             onChange={handleChange("email")}
             type="email"
             className="form-control"
+            value={email}
           />
         </div>
         <div className="form-group">
@@ -58,9 +132,12 @@ const Signup = () => {
             onChange={handleChange("password")}
             type="password"
             className="form-control"
+            value={password}
           />
         </div>
-        <button className="btn btn-dark">Sign Up</button>
+        <button onClick={clickSubmit} className="btn btn-dark">
+          Sign Up
+        </button>
       </form>
       {JSON.stringify(state)}
     </Layout>
