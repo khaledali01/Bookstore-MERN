@@ -1,20 +1,130 @@
-import React from "react";
+import React, { useReducer } from "react";
 import Layout from "../core/Layout";
+import { signin } from "../auth/index";
+import { Navigate } from "react-router-dom";
 
 const Signin = () => {
+  const initialState = {
+    email: "",
+    password: "",
+    error: false,
+    loading: false,
+    redirectToReferrer: false,
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "SET_VALUES":
+        return { ...state, ...action.payload };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { email, password, error, loading, redirectToReferrer } = state;
+
+  const handleChange = (name) => (event) => {
+    dispatch({
+      type: "SET_VALUES",
+      payload: { [name]: event.target.value },
+    });
+  };
+
+  const clickSubmit = (event) => {
+    event.preventDefault();
+    dispatch({ type: "SET_VALUES", payload: { loading: true } });
+    signin({ email, password })
+      .then((data) => {
+        if (data.error) {
+          dispatch({
+            type: "SET_VALUES",
+            payload: { loading: false, error: data.error },
+          });
+        } else {
+          dispatch({
+            type: "SET_VALUES",
+            payload: {
+              loading: false,
+              redirectToReferrer: true,
+              error: false,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: "SET_VALUES",
+          payload: { error: err, loading: false },
+        });
+      });
+  };
+
+  const showError = () => {
+    return (
+      <div
+        className="alert alert-danger"
+        style={{ display: error ? "" : "none" }}
+      >
+        {error}
+      </div>
+    );
+  };
+
+  const showLoading = () => {
+    return (
+      <div
+        className="alert alert-info"
+        style={{ display: loading ? "" : "none" }}
+      >
+        Loading ....
+      </div>
+    );
+  };
+
+  const redirectUser = () => {
+    if (redirectToReferrer) {
+      return <Navigate to="/" />;
+    }
+  };
+
   return (
-    <div>
-      <Layout title="Sign In" description="Sign In to Books E-Commerce">
-        <h1>Sign In</h1>
-        <form>
-          <label>Email</label>
-          <input type="email" />
-          <label>Password</label>
-          <input type="password" />
-          <button>Sign In</button>
-        </form>
-      </Layout>
-    </div>
+    <Layout
+      title="Sign In"
+      description="Sign In to Books E-Commerce"
+      className="container col-md-8 offset-md-2"
+    >
+      {showError()}
+      {showLoading()}
+      {redirectUser()}
+      <h1>Sign Up</h1>
+      <form>
+        <div className="form-group">
+          <label className="text-muted">Email</label>
+          <input
+            onChange={handleChange("email")}
+            type="email"
+            className="form-control"
+            value={email}
+          />
+        </div>
+        <div className="form-group">
+          <label className="text-muted">Password</label>
+          <input
+            onChange={handleChange("password")}
+            type="password"
+            className="form-control"
+            value={password}
+          />
+        </div>
+        <button onClick={clickSubmit} className="btn btn-dark">
+          Sign In
+        </button>
+      </form>
+      {JSON.stringify(state)}
+    </Layout>
   );
 };
 

@@ -49,7 +49,7 @@ exports.signin = (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(400).json({
-        err: "Invalid Email, rewrite it or Signup",
+        error: "Invalid Email, rewrite it or Signup",
       });
     });
 };
