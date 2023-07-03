@@ -1,12 +1,12 @@
 import React, { useReducer } from "react";
 import Layout from "../core/Layout";
-import { signin } from "../auth/index";
+import { signin, authenticate } from "../auth/index";
 import { Navigate } from "react-router-dom";
 
 const Signin = () => {
   const initialState = {
-    email: "",
-    password: "",
+    email: "dady@gmail.com",
+    password: "12345678910asa",
     error: false,
     loading: false,
     redirectToReferrer: false,
@@ -43,13 +43,15 @@ const Signin = () => {
             payload: { loading: false, error: data.error },
           });
         } else {
-          dispatch({
-            type: "SET_VALUES",
-            payload: {
-              loading: false,
-              redirectToReferrer: true,
-              error: false,
-            },
+          authenticate(data, () => {
+            dispatch({
+              type: "SET_VALUES",
+              payload: {
+                loading: false,
+                redirectToReferrer: true,
+                error: false,
+              },
+            });
           });
         }
       })
