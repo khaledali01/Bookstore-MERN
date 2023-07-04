@@ -1,0 +1,9 @@
+.btn,
+.jumbotron,
+.nav :hover {
+  border-radius: 0px;
+}
+
+.jumbotron h2 {
+  margin-top: -20px;
+}
