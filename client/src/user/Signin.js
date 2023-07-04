@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import Layout from "../core/Layout";
 import { signin, authenticate } from "../auth/index";
-import { Navigate } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const Signin = () => {
   const initialState = {
@@ -88,7 +88,7 @@ const Signin = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      return <Navigate to="/" />;
+      return <Redirect to="/" />;
     }
   };
 
