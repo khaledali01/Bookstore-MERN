@@ -1,16 +1,23 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { signout } from "../auth/index";
+import { signout, isAuthenticated } from "../auth/index";
 
-const Menu = () => {
-  return (
-    <nav>
-      <ul className="nav nav-tabs bg-dark" data-bs-theme="dark">
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/">
-            Home
-          </NavLink>
-        </li>
+const isAuth = () => {
+  if (isAuthenticated()) {
+    return (
+      <li className="nav-item">
+        <NavLink
+          style={{ cursor: "pointer", color: "#ffffff" }}
+          className="nav-link"
+          onClick={() => signout(() => isAuth())}
+        >
+          Logout
+        </NavLink>
+      </li>
+    );
+  } else {
+    return (
+      <>
         <li className="nav-item">
           <NavLink className="nav-link" to="/signin">
             Signin
@@ -21,15 +28,21 @@ const Menu = () => {
             Signup
           </NavLink>
         </li>
+      </>
+    );
+  }
+};
+
+const Menu = () => {
+  return (
+    <nav>
+      <ul className="nav nav-tabs bg-dark" data-bs-theme="dark">
         <li className="nav-item">
-          <NavLink
-            style={{ cursor: "pointer", color: "#ffffff" }}
-            className="nav-link"
-            onClick={() => signout()}
-          >
-            Logout
+          <NavLink className="nav-link" to="/">
+            Home
           </NavLink>
         </li>
+        {isAuth()}
       </ul>
     </nav>
   );

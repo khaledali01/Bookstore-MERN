@@ -36,7 +36,7 @@ export const signin = (user) => {
     });
 };
 
-export const signout = () => {
+export const signout = (next) => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
     return fetch(`${API}/signout`, {
@@ -44,6 +44,7 @@ export const signout = () => {
     })
       .then((response) => {
         console.log("signout", response);
+        next();
         return response.json();
       })
       .catch((err) => {
@@ -57,4 +58,15 @@ export const authenticate = (data, next) => {
     localStorage.setItem("jwt", JSON.stringify(data));
   }
   next();
+};
+
+export const isAuthenticated = () => {
+  if (typeof window == "undefined") {
+    return false;
+  }
+  if (localStorage.getItem("jwt")) {
+    return JSON.parse(localStorage.getItem("jwt"));
+  } else {
+    return false;
+  }
 };
