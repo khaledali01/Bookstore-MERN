@@ -73,7 +73,6 @@ exports.list = (req, res) => {
   Category.find()
     .then((categoryList) => {
       res.json({
-        message: "Category listed",
         categoryList,
       });
     })
