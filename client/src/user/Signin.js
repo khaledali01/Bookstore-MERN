@@ -5,8 +5,8 @@ import { Redirect } from "react-router-dom";
 
 const Signin = () => {
   const initialState = {
-    email: "dady@gmail.com",
-    password: "12345678910asa",
+    email: "messi@gmail.com",
+    password: "12444dasd",
     error: false,
     loading: false,
     redirectToReferrer: false,
