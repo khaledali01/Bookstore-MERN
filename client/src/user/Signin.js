@@ -91,22 +91,25 @@ const Signin = () => {
     if (redirectToReferrer) {
       if (user && user.role === 1) {
         return <Redirect to="/admin/dashboard" />;
-    } else {
+      } else {
         return <Redirect to="/user/dashboard" />;
+      }
     }
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
     }
   };
 
   return (
     <Layout
-      title="Sign In"
-      description="Sign In to Books E-Commerce"
+      title="Login"
+      description="Login to Books E-Commerce"
       className="container col-md-8 offset-md-2"
     >
       {showError()}
       {showLoading()}
       {redirectUser()}
-      <h1>Sign Up</h1>
+      <h1>Login</h1>
       <form>
         <div className="form-group">
           <label className="text-muted">Email</label>
@@ -127,7 +130,7 @@ const Signin = () => {
           />
         </div>
         <button onClick={clickSubmit} className="btn btn-dark">
-          Sign In
+          Login
         </button>
       </form>
       {JSON.stringify(state)}
