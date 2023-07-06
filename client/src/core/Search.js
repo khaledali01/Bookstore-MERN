@@ -19,7 +19,7 @@ const Search = () => {
         console.log(data.error);
       } else {
         console.log(data);
-        setData({ ...data, categories: data.categoryList });
+        setData({ ...data, categories: data });
       }
     });
   };

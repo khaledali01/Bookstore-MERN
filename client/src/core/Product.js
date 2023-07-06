@@ -19,7 +19,7 @@ const Product = (props) => {
           if (data.error) {
             setError(data.error);
           } else {
-            setRelatedProduct(data.productsList);
+            setRelatedProduct(data);
           }
         });
       }

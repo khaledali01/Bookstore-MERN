@@ -14,7 +14,7 @@ const Home = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        setProductsBySell(data.productsList);
+        setProductsBySell(data);
       }
     });
   };
@@ -25,7 +25,7 @@ const Home = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        setProductsByArrival(data.productsList);
+        setProductsByArrival(data);
       }
     });
   };

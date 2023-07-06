@@ -22,7 +22,7 @@ const Shop = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        setCategories(data.categoryList);
+        setCategories(data);
       }
     });
   };

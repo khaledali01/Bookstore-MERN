@@ -1,45 +1,45 @@
-const {
-  create,
-  productById,
-  read,
-  remove,
-  update,
-  list,
-  relatedProducts,
-  listCategories,
-  listBySearch,
-  productPhoto,
-  listSearch,
-} = require("../controllers/product");
-const { requireSignIn, isAuth, isAdmin } = require("../controllers/auth");
-const { userById } = require("../controllers/user");
-
 const express = require("express");
-
 const router = express.Router();
 
+const {
+    create,
+    productById,
+    read,
+    remove,
+    update,
+    list,
+    listRelated,
+    listCategories,
+    listBySearch,
+    photo,
+    listSearch
+} = require("../controllers/product");
+const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
+const { userById } = require("../controllers/user");
+
 router.get("/product/:productId", read);
-router.get("/products", list);
-router.get("/products/search", listSearch);
-router.get("/products/related/:productId", relatedProducts);
-router.get("/products/categories", listCategories);
-router.get("/product/photo/:productId", productPhoto);
-router.post("/products/by/search", listBySearch);
-router.post("/product/create/:userId", requireSignIn, isAuth, isAdmin, create);
+router.post("/product/create/:userId", requireSignin, isAuth, isAdmin, create);
 router.delete(
-  "/product/:productId/:userId",
-  requireSignIn,
-  isAuth,
-  isAdmin,
-  remove
+    "/product/:productId/:userId",
+    requireSignin,
+    isAuth,
+    isAdmin,
+    remove
 );
 router.put(
-  "/product/:productId/:userId",
-  requireSignIn,
-  isAuth,
-  isAdmin,
-  update
+    "/product/:productId/:userId",
+    requireSignin,
+    isAuth,
+    isAdmin,
+    update
 );
+
+router.get("/products", list);
+router.get("/products/search", listSearch);
+router.get("/products/related/:productId", listRelated);
+router.get("/products/categories", listCategories);
+router.post("/products/by/search", listBySearch);
+router.get("/product/photo/:productId", photo);
 
 router.param("userId", userById);
 router.param("productId", productById);
