@@ -8,9 +8,12 @@ const Card = ({
   showAddToCartButton = true,
   cartUpdate = false,
   showRemoveProductButton = false,
+  setRun = (f) => f,
+  run = undefined,
+  // changeCartSize
 }) => {
-  const [redirect] = useState(false);
-  const [count] = useState(product.count);
+  const [redirect, setRedirect] = useState(false);
+  const [count, setCount] = useState(product.count);
 
   const showViewButton = (showViewProductButton) => {
     return (
@@ -48,6 +51,11 @@ const Card = ({
     );
   };
 
+  const handleChange = (productId) => (event) => {
+    setRun(!run); // run useEffect in parent Cart
+    setCount(event.target.value < 1 ? 1 : event.target.value);
+  };
+
   const showCartUpdateOptions = (cartUpdate) => {
     return (
       cartUpdate && (
@@ -56,7 +64,12 @@ const Card = ({
             <div className="input-group-prepend">
               <span className="input-group-text">Adjust Quantity</span>
             </div>
-            <input type="number" className="form-control" value={count} />
+            <input
+              type="number"
+              className="form-control"
+              value={count}
+              onChange={handleChange(product._id)}
+            />
           </div>
         </div>
       )
@@ -82,6 +95,7 @@ const Card = ({
         <p className="black-9">
           Category: {product.category && product.category.name}
         </p>
+
         {showStock(product.quantity)}
         <br />
 
