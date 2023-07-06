@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "./ShowImage";
+import moment from "moment";
+import { addItem, updateItem, removeItem } from "./cartHelpers";
 
 const Card = ({
   product,
@@ -26,6 +28,10 @@ const Card = ({
       )
     );
   };
+  const addToCart = () => {
+    // console.log('added');
+    addItem(product, setRedirect(true));
+  };
 
   const shouldRedirect = (redirect) => {
     if (redirect) {
@@ -36,7 +42,10 @@ const Card = ({
   const showAddToCartBtn = (showAddToCartButton) => {
     return (
       showAddToCartButton && (
-        <button className="btn btn-outline-warning mt-2 mb-2 card-btn-1  ">
+        <button
+          onClick={addToCart}
+          className="btn btn-outline-warning mt-2 mb-2 card-btn-1  "
+        >
           Add to cart
         </button>
       )
@@ -54,6 +63,9 @@ const Card = ({
   const handleChange = (productId) => (event) => {
     setRun(!run); // run useEffect in parent Cart
     setCount(event.target.value < 1 ? 1 : event.target.value);
+    if (event.target.value >= 1) {
+      updateItem(productId, event.target.value);
+    }
   };
 
   const showCartUpdateOptions = (cartUpdate) => {
@@ -78,7 +90,13 @@ const Card = ({
   const showRemoveButton = (showRemoveProductButton) => {
     return (
       showRemoveProductButton && (
-        <button className="btn btn-outline-danger mt-2 mb-2">
+        <button
+          onClick={() => {
+            removeItem(product._id);
+            setRun(!run); // run useEffect in parent Cart
+          }}
+          className="btn btn-outline-danger mt-2 mb-2"
+        >
           Remove Product
         </button>
       )
@@ -95,7 +113,9 @@ const Card = ({
         <p className="black-9">
           Category: {product.category && product.category.name}
         </p>
-
+        <p className="black-8">
+          Added on {moment(product.createdAt).fromNow()}
+        </p>
         {showStock(product.quantity)}
         <br />
 
