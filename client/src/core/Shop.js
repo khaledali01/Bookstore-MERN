@@ -22,7 +22,6 @@ const Shop = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        console.log(data)
         setCategories(data.categoryList);
       }
     });

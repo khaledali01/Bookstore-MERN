@@ -6,9 +6,10 @@ const {
   update,
   list,
   relatedProducts,
-  listCategories, 
-  listBySearch, 
-  productPhoto
+  listCategories,
+  listBySearch,
+  productPhoto,
+  listSearch,
 } = require("../controllers/product");
 const { requireSignIn, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
@@ -19,9 +20,10 @@ const router = express.Router();
 
 router.get("/product/:productId", read);
 router.get("/products", list);
+router.get("/products/search", listSearch);
 router.get("/products/related/:productId", relatedProducts);
 router.get("/products/categories", listCategories);
-router.get('/product/photo/:productId', productPhoto)
+router.get("/product/photo/:productId", productPhoto);
 router.post("/products/by/search", listBySearch);
 router.post("/product/create/:userId", requireSignIn, isAuth, isAdmin, create);
 router.delete(
