@@ -60,7 +60,6 @@ const Shop = () => {
   };
 
   const loadFilteredResults = (newFilters) => {
-    // console.log(newFilters);
     getFilteredProducts(skip, limit, newFilters).then((data) => {
       if (data.error) {
         setError(data.error);
@@ -74,7 +73,6 @@ const Shop = () => {
 
   const loadMore = () => {
     let toSkip = skip + limit;
-    // console.log(newFilters);
     getFilteredProducts(toSkip, limit, myFilters.filters).then((data) => {
       if (data.error) {
         setError(data.error);
@@ -103,7 +101,6 @@ const Shop = () => {
   }, []);
 
   const handleFilters = (filters, filterBy) => {
-    // console.log("SHOP", filters, filterBy);
     const newFilters = { ...myFilters };
     newFilters.filters[filterBy] = filters;
 
@@ -213,11 +210,10 @@ const Shop = () => {
         </div>
 
         <div className="col-8">
-          <h2 className="mb-4">Products</h2>
           <div className="row">
+            {showByFilters()}
             {showNewArrivals()}
             {showBySell()}
-            {showByFilters()}
           </div>
           <hr />
           {loadMoreButton()}
