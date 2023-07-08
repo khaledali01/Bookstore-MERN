@@ -1,178 +1,137 @@
-import React, { useState, useEffect } from 'react';
-import { getBraintreeClientToken, processPayment, createOrder } from './apiCore';
-import { emptyCart } from './cartHelpers';
-import { isAuthenticated } from '../auth';
-import { Link } from 'react-router-dom';
-// import "braintree-web"; // not using this package
-import DropIn from 'braintree-web-drop-in-react';
+import React, { useState } from "react";
+import Layout from "./Layout";
 
-const Checkout = ({ products, setRun = f => f, run = undefined }) => {
-    const [data, setData] = useState({
-        loading: false,
-        success: false,
-        clientToken: null,
-        error: '',
-        instance: {},
-        address: ''
-    });
+const Checkout = () => {
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [choice, setChoice] = useState("");
+  const [subtotal, setSubtotal] = useState(0);
+  const [shippingCost, setShippingCost] = useState(0);
+  const [total, setTotal] = useState(0);
 
-    const userId = isAuthenticated() && isAuthenticated().user._id;
-    const token = isAuthenticated() && isAuthenticated().token;
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
 
-    const getToken = (userId, token) => {
-        getBraintreeClientToken(userId, token).then(data => {
-            if (data.error) {
-                console.log(data.error);
-                setData({ ...data, error: data.error });
-            } else {
-                console.log(data);
-                setData({ clientToken: data.clientToken });
-            }
-        });
-    };
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+  };
 
-    useEffect(() => {
-        getToken(userId, token);
-    }, []);
+  const handlePhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
+  };
 
-    const handleAddress = event => {
-        setData({ ...data, address: event.target.value });
-    };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-    const getTotal = () => {
-        return products.reduce((currentValue, nextValue) => {
-            return currentValue + nextValue.count * nextValue.price;
-        }, 0);
-    };
+  const handleChoiceChange = (e) => {
+    setChoice(e.target.value);
+  };
 
-    const showCheckout = () => {
-        return isAuthenticated() ? (
-            <div>{showDropIn()}</div>
-        ) : (
-            <Link to="/signin">
-                <button className="btn btn-primary">Sign in to checkout</button>
-            </Link>
-        );
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform submission logic here
+  };
 
-    let deliveryAddress = data.address;
-
-    const buy = () => {
-        setData({ loading: true });
-        // send the nonce to your server
-        // nonce = data.instance.requestPaymentMethod()
-        let nonce;
-        let getNonce = data.instance
-            .requestPaymentMethod()
-            .then(data => {
-                // console.log(data);
-                nonce = data.nonce;
-                // once you have nonce (card type, card number) send nonce as 'paymentMethodNonce'
-                // and also total to be charged
-                // console.log(
-                //     "send nonce and total to process: ",
-                //     nonce,
-                //     getTotal(products)
-                // );
-                const paymentData = {
-                    paymentMethodNonce: nonce,
-                    amount: getTotal(products)
-                };
-
-                processPayment(userId, token, paymentData)
-                    .then(response => {
-                        console.log(response);
-                        // empty cart
-                        // create order
-
-                        const createOrderData = {
-                            products: products,
-                            transaction_id: response.transaction.id,
-                            amount: response.transaction.amount,
-                            address: deliveryAddress
-                        };
-
-                        createOrder(userId, token, createOrderData)
-                            .then(response => {
-                                emptyCart(() => {
-                                    setRun(!run); // run useEffect in parent Cart
-                                    console.log('payment success and empty cart');
-                                    setData({
-                                        loading: false,
-                                        success: true
-                                    });
-                                });
-                            })
-                            .catch(error => {
-                                console.log(error);
-                                setData({ loading: false });
-                            });
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        setData({ loading: false });
-                    });
-            })
-            .catch(error => {
-                // console.log("dropin error: ", error);
-                setData({ ...data, error: error.message });
-            });
-    };
-
-    const showDropIn = () => (
-        <div onBlur={() => setData({ ...data, error: '' })}>
-            {data.clientToken !== null && products.length > 0 ? (
-                <div>
-                    <div className="gorm-group mb-3">
-                        <label className="text-muted">Delivery address:</label>
-                        <textarea
-                            onChange={handleAddress}
-                            className="form-control"
-                            value={data.address}
-                            placeholder="Type your delivery address here..."
-                        />
-                    </div>
-
-                    <DropIn
-                        options={{
-                            authorization: data.clientToken,
-                            paypal: {
-                                flow: 'vault'
-                            }
-                        }}
-                        onInstance={instance => (data.instance = instance)}
-                    />
-                    <button onClick={buy} className="btn btn-success btn-block">
-                        Pay
-                    </button>
-                </div>
-            ) : null}
+  return (
+    <Layout
+      title="Checkout Page"
+      description="Enter your personal information and shipping details."
+      className="container"
+    >
+      <div className="row">
+        <div className="col-md-6">
+          <form onSubmit={handleSubmit}>
+            <section>
+              <h3>Personal Information</h3>
+              <div className="form-group">
+                <label htmlFor="name">Name:</label>
+                <input
+                  id="name"
+                  className="form-control"
+                  type="text"
+                  value={name}
+                  onChange={handleNameChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="address">Address:</label>
+                <input
+                  id="address"
+                  className="form-control"
+                  type="text"
+                  value={address}
+                  onChange={handleAddressChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phoneNumber">Phone Number:</label>
+                <input
+                  id="phoneNumber"
+                  className="form-control"
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={handlePhoneNumberChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input
+                  id="email"
+                  className="form-control"
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+              </div>
+            </section>
+          </form>
         </div>
-    );
-
-    const showError = error => (
-        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
-            {error}
+        <div className="col-md-6">
+          <section>
+            <h3>Order Summary</h3>
+            <div className="form-group">
+              <label htmlFor="subtotal">Subtotal:</label>
+              <span id="subtotal" className="form-control">
+                {subtotal}
+              </span>
+            </div>
+            <div className="form-group">
+              <label htmlFor="choice">Governorate - المحافظة:</label>
+              <select
+                id="choice"
+                className="form-control"
+                value={choice}
+                onChange={handleChoiceChange}
+              >
+                <option value="">Select an option</option>
+                <option value="option1">Cairo - القاهرة</option>
+                <option value="option2">Alexandria - الإسكندرية</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="shippingCost">Shipping Cost:</label>
+              <span id="shippingCost" className="form-control">
+                {shippingCost}
+              </span>
+            </div>
+            <div className="form-group">
+              <label htmlFor="total">Total:</label>
+              <span id="total" className="form-control">
+                {total}
+              </span>
+            </div>
+            <button className="btn btn-primary btn-block" type="submit">
+              Submit Order
+            </button>
+          </section>
         </div>
-    );
-
-    const showSuccess = success => (
-        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
-            Thanks! Your payment was successful!
-        </div>
-    );
-
-    const showLoading = loading => loading && <h2 className="text-danger">Loading...</h2>;
-
-    return (
-        <div>
-            <h2>Total: ${getTotal()}</h2>
-            {showLoading(data.loading)}
-            {showSuccess(data.success)}
-            {showError(data.error)}
-            {showCheckout()}
-        </div>
-    );
+      </div>
+    </Layout>
+  );
 };
 
 export default Checkout;

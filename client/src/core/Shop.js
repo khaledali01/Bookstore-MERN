@@ -5,17 +5,71 @@ import { getCategories, getFilteredProducts } from "./apiCore";
 import Checkbox from "./CheckBox";
 import RadioBox from "./RadioBox";
 import { prices } from "./fixedPrices";
+import { getProducts } from "./apiCore";
+import Search from "./SearchWithCategory";
 
 const Shop = () => {
   const [myFilters, setMyFilters] = useState({
     filters: { category: [], price: [] },
   });
+  const [productsBySell, setProductsBySell] = useState([]);
+  const [productsByArrival, setProductsByArrival] = useState([]);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
   const [filteredResults, setFilteredResults] = useState([]);
+
+  const loadProductsBySell = () => {
+    getProducts("sold").then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsBySell(data);
+      }
+    });
+  };
+
+  const loadProductsByArrival = (e) => {
+    getProducts("createdAt").then((data) => {
+      console.log(data);
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsByArrival(data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    loadProductsByArrival();
+    loadProductsBySell();
+  }, []);
+
+  const showNewArrivals = () => {
+    return (
+      <div className="row">
+        {productsByArrival.map((product, i) => (
+          <div key={i} className="col-4 mb-3">
+            <Card product={product} />
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const showBySell = () => {
+    return (
+      <div className="row">
+        {productsBySell.map((product, i) => (
+          <div key={i} className="col-4 mb-3">
+            <Card product={product} />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   const init = () => {
     getCategories().then((data) => {
@@ -97,12 +151,24 @@ const Shop = () => {
 
   return (
     <Layout
-      title="Shop Page"
+      title="Shop"
       description="Search and find books of your choice"
       className="container-fluid"
     >
+      <Search />
       <div className="row">
         <div className="col-4">
+          <h4>Filter by</h4>
+          <ul>
+            <li>
+              <input type="checkbox" className="form-check-input" />
+              <label className="form-check-label">New Arrivals</label>
+            </li>
+            <li>
+              <input type="checkbox" className="form-check-input" />
+              <label className="form-check-label">Sells</label>
+            </li>
+          </ul>
           <h4>Filter by categories</h4>
           <ul>
             <Checkbox

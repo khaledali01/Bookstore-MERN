@@ -32,7 +32,7 @@ exports.create = (req, res) => {
         // order.address
         // order.products.length
         // order.amount
-        const emailData = {
+        /* const emailData = {
             to: 'kaloraat@gmail.com',
             from: 'noreply@ecommerce.com',
             subject: `A new order is received`,
@@ -43,7 +43,7 @@ exports.create = (req, res) => {
             <p>Login to dashboard to the order in detail.</p>
         `
         };
-        sgMail.send(emailData);
+        sgMail.send(emailData); */
         res.json(data);
     });
 };

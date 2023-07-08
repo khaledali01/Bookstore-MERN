@@ -12,7 +12,6 @@
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
     "body-parser": "^1.19.0",
-    "braintree": "^2.16.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
