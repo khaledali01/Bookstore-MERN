@@ -14,6 +14,8 @@ const Shop = () => {
   });
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
+  const [productsBySellCheck, setProductsBySellCheck] = useState(false);
+  const [productsByArrivalCheck, setProductsByArrivalCheck] = useState(false);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
@@ -46,30 +48,6 @@ const Shop = () => {
     loadProductsByArrival();
     loadProductsBySell();
   }, []);
-
-  const showNewArrivals = () => {
-    return (
-      <div className="row">
-        {productsByArrival.map((product, i) => (
-          <div key={i} className="col-4 mb-3">
-            <Card product={product} />
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const showBySell = () => {
-    return (
-      <div className="row">
-        {productsBySell.map((product, i) => (
-          <div key={i} className="col-4 mb-3">
-            <Card product={product} />
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   const init = () => {
     getCategories().then((data) => {
@@ -149,6 +127,44 @@ const Shop = () => {
     return array;
   };
 
+  const handleNewArrivals = (e) => {
+    setProductsByArrivalCheck(e.target.checked);
+  };
+
+  const handleBySell = (e) => {
+    setProductsBySellCheck(e.target.checked);
+  };
+
+  const showNewArrivals = () => {
+    if (productsByArrivalCheck) {
+      return productsByArrival.map((product, i) => (
+        <div key={i} className="col-4 mb-3">
+          <Card product={product} />
+        </div>
+      ));
+    }
+  };
+
+  const showBySell = () => {
+    if (productsBySellCheck) {
+      return productsBySell.map((product, i) => (
+        <div key={i} className="col-4 mb-3">
+          <Card product={product} />
+        </div>
+      ));
+    }
+  };
+
+  const showByFilters = () => {
+    if (!productsByArrivalCheck && !productsBySellCheck) {
+      return filteredResults.map((product, i) => (
+        <div key={i} className="col-4 mb-3">
+          <Card product={product} />
+        </div>
+      ));
+    }
+  };
+
   return (
     <Layout
       title="Shop"
@@ -161,11 +177,21 @@ const Shop = () => {
           <h4>Filter by</h4>
           <ul>
             <li>
-              <input type="checkbox" className="form-check-input" />
+              <input
+                onChange={handleNewArrivals}
+                name="NewArrivalsCheckbox"
+                type="checkbox"
+                className="form-check-input"
+              />
               <label className="form-check-label">New Arrivals</label>
             </li>
             <li>
-              <input type="checkbox" className="form-check-input" />
+              <input
+                onChange={handleBySell}
+                name="BySellCheckbox"
+                type="checkbox"
+                className="form-check-input"
+              />
               <label className="form-check-label">Sells</label>
             </li>
           </ul>
@@ -189,11 +215,9 @@ const Shop = () => {
         <div className="col-8">
           <h2 className="mb-4">Products</h2>
           <div className="row">
-            {filteredResults.map((product, i) => (
-              <div key={i} className="col-4 mb-3">
-                <Card product={product} />
-              </div>
-            ))}
+            {showNewArrivals()}
+            {showBySell()}
+            {showByFilters()}
           </div>
           <hr />
           {loadMoreButton()}
