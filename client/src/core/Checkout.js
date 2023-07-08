@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Layout from "./Layout";
+import { createOrder } from "./apiCore";
+import { isAuthenticated } from "../auth";
 
 const Checkout = () => {
   const [name, setName] = useState("");
@@ -10,6 +12,9 @@ const Checkout = () => {
   const [subtotal, setSubtotal] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
   const [total, setTotal] = useState(0);
+
+  const userId = isAuthenticated() && isAuthenticated().user._id;
+  const token = isAuthenticated() && isAuthenticated().token;
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -33,7 +38,17 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform submission logic here
+    const createOrderData = {
+      address: address,
+    };
+
+    createOrder(userId, token, createOrderData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -44,7 +59,7 @@ const Checkout = () => {
     >
       <div className="row">
         <div className="col-md-6">
-          <form onSubmit={handleSubmit}>
+          <form>
             <section>
               <h3>Personal Information</h3>
               <div className="form-group">
@@ -124,12 +139,22 @@ const Checkout = () => {
                 {total}
               </span>
             </div>
-            <button className="btn btn-primary btn-block" type="submit">
+            <button onClick={handleSubmit} className="btn btn-primary btn-block" type="submit">
               Submit Order
             </button>
           </section>
         </div>
       </div>
+      {JSON.stringify({
+        name,
+        address,
+        phoneNumber,
+        email,
+        choice,
+        subtotal,
+        shippingCost,
+        total,
+      })}
     </Layout>
   );
 };

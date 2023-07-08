@@ -3,6 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth/index";
 import { itemTotal } from "./cartHelpers";
 
+
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
     return { color: "#ff9900" };
