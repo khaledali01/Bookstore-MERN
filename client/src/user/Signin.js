@@ -133,7 +133,6 @@ const Signin = () => {
           Login
         </button>
       </form>
-      {JSON.stringify(state)}
     </Layout>
   );
 };

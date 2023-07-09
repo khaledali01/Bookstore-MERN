@@ -93,7 +93,7 @@ const Card = ({
     );
   };
   return (
-    <div className="card">
+    <div className="card border-success rounded-lg">
       <div className="card-header ">{product.name}</div>
       <div className="card-body">
         {shouldRedirect(redirect)}

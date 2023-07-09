@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import Layout from "../core/Layout";
-import {signup} from '../auth/index'
+import { signup } from "../auth/index";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -57,7 +57,7 @@ const Signup = () => {
         console.log(error);
       });
   };
-  
+
   const showError = () => {
     return (
       <div
@@ -121,7 +121,6 @@ const Signup = () => {
           Sign Up
         </button>
       </form>
-      {JSON.stringify(state)}
     </Layout>
   );
 };
