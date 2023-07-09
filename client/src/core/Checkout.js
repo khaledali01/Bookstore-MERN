@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Layout from "./Layout";
 import { createOrder } from "./apiCore";
 import { isAuthenticated } from "../auth";
 
@@ -52,11 +51,7 @@ const Checkout = () => {
   };
 
   return (
-    <Layout
-      title="Checkout Page"
-      description="Enter your personal information and shipping details."
-      className="container"
-    >
+    <div>
       <div className="row">
         <div className="col-md-6">
           <form>
@@ -139,7 +134,11 @@ const Checkout = () => {
                 {total}
               </span>
             </div>
-            <button onClick={handleSubmit} className="btn btn-primary btn-block" type="submit">
+            <button
+              onClick={handleSubmit}
+              className="btn btn-primary btn-block"
+              type="submit"
+            >
               Submit Order
             </button>
           </section>
@@ -155,7 +154,7 @@ const Checkout = () => {
         shippingCost,
         total,
       })}
-    </Layout>
+    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { createCategory } from "./apiAdmin";
@@ -70,10 +69,7 @@ const AddCategory = () => {
   );
 
   return (
-    <Layout
-      title="Add a new category"
-      description={`G'day ${user.name}, ready to add a new category?`}
-    >
+    <div>
       <div className="row">
         <div className="col-md-8 offset-md-2">
           {showSuccess()}
@@ -82,7 +78,7 @@ const AddCategory = () => {
           {goBack()}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

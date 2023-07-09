@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import Layout from "../core/Layout";
 import { signup } from "../auth/index";
 import { Link } from "react-router-dom";
 
@@ -81,10 +80,7 @@ const Signup = () => {
   };
 
   return (
-    <Layout
-      title="Sign Up"
-      description="Sign Up to Books E-Commerce"
-      className="container col-md-8 offset-md-2"
+    <div
     >
       {showError()}
       {showSuccess()}
@@ -121,7 +117,7 @@ const Signup = () => {
           Sign Up
         </button>
       </form>
-    </Layout>
+    </div>
   );
 };
 

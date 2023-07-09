@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import Layout from "../core/Layout";
 import { signin, authenticate, isAuthenticated } from "../auth/index";
 import { Redirect } from "react-router-dom";
 
@@ -101,11 +100,7 @@ const Signin = () => {
   };
 
   return (
-    <Layout
-      title="Login"
-      description="Login to Books E-Commerce"
-      className="container col-md-8 offset-md-2"
-    >
+    <div>
       {showError()}
       {showLoading()}
       {redirectUser()}
@@ -133,7 +128,7 @@ const Signin = () => {
           Login
         </button>
       </form>
-    </Layout>
+    </div>
   );
 };
 

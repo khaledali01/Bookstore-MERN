@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./Layout";
 import Card from "./Card";
 import { getCategories, getFilteredProducts } from "./apiCore";
 import Checkbox from "./CheckBox";
 import RadioBox from "./RadioBox";
 import { prices } from "./fixedPrices";
 import { getProducts } from "./apiCore";
-import Search from "./SearchWithCategory";
+import Search from "./Search";
 
 const Shop = () => {
   const [myFilters, setMyFilters] = useState({
@@ -163,12 +162,7 @@ const Shop = () => {
   };
 
   return (
-    <Layout
-      title="Shop"
-      description="Search and find books of your choice"
-      className="container-fluid"
-    >
-      <Search />
+    <div>
       <div className="row">
         <div className="col-4">
           <h4>Filter by</h4>
@@ -211,6 +205,7 @@ const Shop = () => {
 
         <div className="col-8">
           <div className="row">
+            <Search className="search" />
             {showByFilters()}
             {showNewArrivals()}
             {showBySell()}
@@ -219,7 +214,7 @@ const Shop = () => {
           {loadMoreButton()}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

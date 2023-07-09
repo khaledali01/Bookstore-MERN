@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Redirect } from "react-router-dom";
 import { getProduct, getCategories, updateProduct } from "./apiAdmin";
@@ -27,7 +26,6 @@ const UpdateProduct = ({ match }) => {
     name,
     description,
     price,
-    // categories,
     category,
     shipping,
     quantity,
@@ -220,10 +218,7 @@ const UpdateProduct = ({ match }) => {
   };
 
   return (
-    <Layout
-      title="Add a new product"
-      description={`G'day ${user.name}, ready to add a new product?`}
-    >
+    <div>
       <div className="row">
         <div className="col-md-8 offset-md-2">
           {showLoading()}
@@ -233,7 +228,7 @@ const UpdateProduct = ({ match }) => {
           {redirectUser()}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

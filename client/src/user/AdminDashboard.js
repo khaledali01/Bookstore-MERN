@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 
@@ -54,16 +53,13 @@ const AdminDashboard = () => {
     };
 
     return (
-        <Layout
-            title="Dashboard"
-            description={`G'day ${name}!`}
-            className="container-fluid"
+        <div
         >
             <div className="row">
                 <div className="col-3">{adminLinks()}</div>
                 <div className="col-9">{adminInfo()}</div>
             </div>
-        </Layout>
+        </div>
     );
 };
 

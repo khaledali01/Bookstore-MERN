@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Layout from "./Layout";
 import { getCart } from "./cartHelpers";
 import Card from "./Card";
 import { isAuthenticated } from "../auth";
-import Checkout from "./Checkout";
 
 const Cart = () => {
   const [items, setItems] = useState([]);
@@ -60,10 +58,7 @@ const Cart = () => {
   );
 
   return (
-    <Layout
-      title="Shopping Cart"
-      description="Manage your cart items. Add remove checkout or continue shopping."
-      className="container-fluid"
+    <div
     >
       <div className="row">
         <div className="col-6">
@@ -78,7 +73,7 @@ const Cart = () => {
         </div>
         
       </div>
-    </Layout>
+    </div>
   );
 };
 

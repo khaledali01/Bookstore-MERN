@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./Layout";
 import { read, listRelated } from "./apiCore";
 import Card from "./Card";
 
@@ -32,13 +31,7 @@ const Product = (props) => {
   }, [props]);
 
   return (
-    <Layout
-      title={product && product.name}
-      description={
-        product && product.description && product.description.substring(0, 100)
-      }
-      className="container-fluid"
-    >
+    <div>
       <div className="row">
         <div className="col-8">
           {product && product.description && (
@@ -55,7 +48,7 @@ const Product = (props) => {
           ))}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

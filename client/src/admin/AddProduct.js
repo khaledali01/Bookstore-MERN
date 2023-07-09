@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { createProduct, getCategories } from "./apiAdmin";
 
@@ -185,7 +184,7 @@ const AddProduct = () => {
     );
 
   return (
-    <Layout
+    <div
       title="Add a new product"
       description={`G'day ${user.name}, ready to add a new product?`}
     >
@@ -197,7 +196,7 @@ const AddProduct = () => {
           {newPostForm()}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
