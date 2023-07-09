@@ -2,7 +2,6 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth/index";
 import { itemTotal } from "./cartHelpers";
-import Search from "./Search";
 
 const Header = ({ history }) => {
   return (
@@ -50,31 +49,30 @@ const Header = ({ history }) => {
                 className="btn btn-outline-light fw-bold text-uppercase px-3 m-4 bg-success"
                 to="/signin"
               >
-                Login - تسجيل دخول
+                Login
               </Link>
 
               <Link
                 className="btn fw-bold btn-warning text-uppercase px-3"
                 to="/signup"
               >
-                Signup - إنشاء حساب
+                Signup
               </Link>
             </div>
           )}
 
           {isAuthenticated() && (
-              <span
-                className="btn fw-bold btn-warning text-uppercase px-3"
-                onClick={() =>
-                  signout(() => {
-                    history.push("/");
-                  })
-                }
-              >
-                Logout
-              </span>
+            <span
+              className="btn fw-bold btn-warning text-uppercase px-3"
+              onClick={() =>
+                signout(() => {
+                  history.push("/");
+                })
+              }
+            >
+              Logout
+            </span>
           )}
-          
         </div>
       </div>
     </header>

@@ -1,8 +1,9 @@
 import React, { useReducer } from "react";
 import { signin, authenticate, isAuthenticated } from "../auth/index";
 import { Redirect } from "react-router-dom";
+import "./Login.css";
 
-const Signin = () => {
+const Login = () => {
   const initialState = {
     email: "messi@gmail.com",
     password: "12444dasd",
@@ -100,36 +101,61 @@ const Signin = () => {
   };
 
   return (
-    <div>
-      {showError()}
-      {showLoading()}
-      {redirectUser()}
-      <h1>Login</h1>
-      <form>
-        <div className="form-group">
-          <label className="text-muted">Email</label>
-          <input
-            onChange={handleChange("email")}
-            type="email"
-            className="form-control"
-            value={email}
-          />
-        </div>
-        <div className="form-group">
-          <label className="text-muted">Password</label>
-          <input
-            onChange={handleChange("password")}
-            type="password"
-            className="form-control"
-            value={password}
-          />
-        </div>
-        <button onClick={clickSubmit} className="btn btn-dark">
-          Login
-        </button>
-      </form>
+    <div className="vh-100 bg-body-tertiary">
+      <main
+        id="main"
+        className="border border-warning form-signin bg-secondary-subtle position-absolute top-50 start-50 translate-middle"
+      >
+        {showError()}
+        {showLoading()}
+        {redirectUser()}
+        <form>
+          <div className="form-floating">
+            <input
+              onChange={handleChange("email")}
+              type="email"
+              className="form-control"
+              id="floatingInput"
+              placeholder="name@example.com"
+              value={email}
+            />
+            <label for="floatingInput">Email address</label>
+          </div>
+
+          <div className="form-floating">
+            <input
+              onChange={handleChange("password")}
+              type="password"
+              value={password}
+              className="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+            />
+            <label for="floatingPassword">Password</label>
+          </div>
+
+          <div class="form-check text-start my-3">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value="remember-me"
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" for="flexCheckDefault">
+              Remember me
+            </label>
+          </div>
+          <button
+            onClick={clickSubmit}
+            className="btn btn-secondary w-100 py-2"
+            type="submit"
+          >
+            Sign in
+          </button>
+        </form>
+      </main>
     </div>
   );
 };
 
-export default Signin;
+export default Login;
