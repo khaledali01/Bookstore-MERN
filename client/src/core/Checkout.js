@@ -52,108 +52,196 @@ const Checkout = () => {
 
   return (
     <div>
-      <div className="row">
-        <div className="col-md-6">
-          <form>
-            <section>
-              <h3>Personal Information</h3>
-              <div className="form-group">
-                <label htmlFor="name">Name:</label>
-                <input
-                  id="name"
-                  className="form-control"
-                  type="text"
-                  value={name}
-                  onChange={handleNameChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address">Address:</label>
-                <input
-                  id="address"
-                  className="form-control"
-                  type="text"
-                  value={address}
-                  onChange={handleAddressChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="phoneNumber">Phone Number:</label>
-                <input
-                  id="phoneNumber"
-                  className="form-control"
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={handlePhoneNumberChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email:</label>
-                <input
-                  id="email"
-                  className="form-control"
-                  type="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                />
-              </div>
-            </section>
-          </form>
-        </div>
-        <div className="col-md-6">
-          <section>
-            <h3>Order Summary</h3>
-            <div className="form-group">
-              <label htmlFor="subtotal">Subtotal:</label>
-              <span id="subtotal" className="form-control">
-                {subtotal}
-              </span>
-            </div>
-            <div className="form-group">
-              <label htmlFor="choice">Governorate - المحافظة:</label>
-              <select
-                id="choice"
-                className="form-control"
-                value={choice}
-                onChange={handleChoiceChange}
+      <div class="container">
+        <main>
+          <div class="py-5 text-center">
+            <h2>Checkout Form</h2>
+          </div>
+
+          <div class="row g-5">
+            <div class="col-md-5 col-lg-4 order-md-last">
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Order Summary</span>
+                <span class="badge bg-primary rounded-pill">3</span>
+              </h4>
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm mt-3">
+                  <div>
+                    <h6 class="my-0">Subtotal</h6>
+                  </div>
+                  <span class="text-body-secondary">{subtotal}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Shipping Cost</h6>
+                  </div>
+                  <span class="text-body-secondary">{shippingCost}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Total</h6>
+                  </div>
+                  <span class="text-body-secondary">{total}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                  <div class="text-success">
+                    <h6 class="my-0">Promo code</h6>
+                    <small>EXAMPLECODE</small>
+                  </div>
+                  <span class="text-success">−$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total (USD)</span>
+                  <strong>$20</strong>
+                </li>
+              </ul>
+
+              <form class="card p-2 mt-4">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Promo code"
+                  />
+                  <button type="submit" class="btn btn-secondary">
+                    Redeem
+                  </button>
+                </div>
+              </form>
+
+              <button
+                onClick={handleSubmit}
+                class="w-100 btn btn-primary btn-lg mt-4"
+                type="submit"
               >
-                <option value="">Select an option</option>
-                <option value="option1">Cairo - القاهرة</option>
-                <option value="option2">Alexandria - الإسكندرية</option>
-              </select>
+                Place Order
+              </button>
             </div>
-            <div className="form-group">
-              <label htmlFor="shippingCost">Shipping Cost:</label>
-              <span id="shippingCost" className="form-control">
-                {shippingCost}
-              </span>
+            <div class="col-md-7 col-lg-8">
+              <h4 class="mb-3">Billing Information</h4>
+              <form class="needs-validation" novalidate>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label for="firstName" class="form-label">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="firstName"
+                      placeholder=""
+                      value={name}
+                      onChange={handleNameChange}
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Valid first name is required.
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="email" class="form-label">
+                      Email <span class="text-body-secondary">(Optional)</span>
+                    </label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={handleEmailChange}
+                    />
+                    <div class="invalid-feedback">
+                      Please enter a valid email address for shipping updates.
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="address" class="form-label">
+                      Address
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="address"
+                      value={address}
+                      placeholder="1234 Main St"
+                      onChange={handleAddressChange}
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please enter your shipping address.
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="address2" class="form-label">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="address2"
+                      placeholder="01065140587"
+                      value={phoneNumber}
+                      onChange={handlePhoneNumberChange}
+                    />
+                  </div>
+
+                  <div class="col-md-5">
+                    <label for="country" class="form-label">
+                      Governorate
+                    </label>
+                    <select
+                      value={choice}
+                      onChange={handleChoiceChange}
+                      class="form-select"
+                      id="country"
+                      required
+                    >
+                      <option value="">Select an option</option>
+                      <option>Cairo</option>
+                      <option>Alexandria</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-check mt-3">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="save-info"
+                  />
+                  <label class="form-check-label" for="save-info">
+                    Save this information for next time
+                  </label>
+                </div>
+
+                <h4 class="mb-3 mt-4">Payment</h4>
+
+                <div class="my-3">
+                  <div class="form-check">
+                    <input
+                      id="credit"
+                      name="paymentMethod"
+                      type="radio"
+                      class="form-check-input"
+                      checked
+                      required
+                    />
+                    <label class="form-check-label" for="credit">
+                      Cash On Delivery
+                    </label>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div className="form-group">
-              <label htmlFor="total">Total:</label>
-              <span id="total" className="form-control">
-                {total}
-              </span>
-            </div>
-            <button
-              onClick={handleSubmit}
-              className="btn btn-primary btn-block"
-              type="submit"
-            >
-              Submit Order
-            </button>
-          </section>
-        </div>
+          </div>
+        </main>
       </div>
-      {JSON.stringify({
-        name,
-        address,
-        phoneNumber,
-        email,
-        choice,
-        subtotal,
-        shippingCost,
-        total,
-      })}
     </div>
   );
 };
