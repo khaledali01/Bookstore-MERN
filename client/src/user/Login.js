@@ -109,6 +109,9 @@ const Login = () => {
         {showError()}
         {showLoading()}
         {redirectUser()}
+        <h1 className="text-uppercase fs-3 mb-3 p-2 d-flex justify-content-center">
+          Login
+        </h1>
         <form>
           <div className="form-floating">
             <input
@@ -127,7 +130,7 @@ const Login = () => {
               onChange={handleChange("password")}
               type="password"
               value={password}
-              className="form-control"
+              className="form-control mt-2"
               id="floatingPassword"
               placeholder="Password"
             />
@@ -147,7 +150,7 @@ const Login = () => {
           </div>
           <button
             onClick={clickSubmit}
-            className="btn btn-secondary w-100 py-2"
+            className="btn btn-secondary w-100 py-2 mt-3 text-uppercase"
             type="submit"
           >
             Sign in
