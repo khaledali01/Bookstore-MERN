@@ -41,7 +41,7 @@ const Cart = () => {
     return isAuthenticated() ? (
       <div>
         <Link to="/checkout">
-          <button className="btn btn-primary">Checkout - بيانات التوصيل</button>
+          <button className="btn btn-primary">Checkout</button>
         </Link>
       </div>
     ) : (

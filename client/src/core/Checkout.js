@@ -51,7 +51,7 @@ const Checkout = () => {
   };
 
   return (
-    <div>
+    <div className="bg-body-tertiary">
       <div class="container">
         <main>
           <div class="py-5 text-center">
@@ -71,26 +71,26 @@ const Checkout = () => {
                   </div>
                   <span class="text-body-secondary">{subtotal}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between lh-sm">
+                <li class="list-group-item d-flex justify-content-between lh-sm mt-1">
                   <div>
                     <h6 class="my-0">Shipping Cost</h6>
                   </div>
                   <span class="text-body-secondary">{shippingCost}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between lh-sm">
+                <li class="list-group-item d-flex justify-content-between lh-sm mt-1">
                   <div>
                     <h6 class="my-0">Total</h6>
                   </div>
                   <span class="text-body-secondary">{total}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                <li class="list-group-item d-flex justify-content-between mt-1">
                   <div class="text-success">
                     <h6 class="my-0">Promo code</h6>
                     <small>EXAMPLECODE</small>
                   </div>
                   <span class="text-success">−$5</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between">
+                <li class="list-group-item d-flex justify-content-between mt-1">
                   <span>Total (USD)</span>
                   <strong>$20</strong>
                 </li>

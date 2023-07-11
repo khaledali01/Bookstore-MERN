@@ -1,82 +1,49 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import { signout, isAuthenticated } from "../auth/index";
-import { itemTotal } from "./cartHelpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 
-const Header = ({ history }) => {
+const Header = () => {
   return (
-    <header class="p-3 bg-secondary">
-      <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <ul class="nav col-12 text-uppercase fw-bold col-lg-auto  me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li>
-              <Link className="nav-link px-5 text-white" to="/shop">
-                Shop
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-link px-2 text-white" to="/cart">
-                Cart{"  "}
-                <sup>
-                  <small>{itemTotal()}</small>
-                </sup>
-              </Link>
-            </li>
-
-            {isAuthenticated() && isAuthenticated().user.role === 0 && (
-              <li>
-                <Link className="nav-link px-2 text-white" to="/user/dashboard">
-                  Dashboard
-                </Link>
-              </li>
-            )}
-
-            {isAuthenticated() && isAuthenticated().user.role === 1 && (
-              <li>
-                <Link
-                  className="nav-link px-2 text-white"
-                  to="/admin/dashboard"
-                >
-                  Dashboard
-                </Link>
-              </li>
-            )}
-          </ul>
-
-          {!isAuthenticated() && (
-            <div class="text-end px-5">
-              <Link
-                className="btn btn-outline-light fw-bold text-uppercase px-3 m-4 bg-success"
-                to="/signin"
-              >
-                Login
-              </Link>
-
-              <Link
-                className="btn fw-bold btn-warning text-uppercase px-3"
-                to="/signup"
-              >
-                Signup
-              </Link>
-            </div>
-          )}
-
-          {isAuthenticated() && (
-            <span
-              className="btn fw-bold btn-warning text-uppercase px-3"
-              onClick={() =>
-                signout(() => {
-                  history.push("/");
-                })
-              }
-            >
-              Logout
-            </span>
-          )}
-        </div>
-      </div>
-    </header>
+    <div
+      className="d-flex justify-content-center bg-info"
+      style={{ height: "50px", alignItems: "center" }}
+    >
+      <FontAwesomeIcon
+        className="m-2"
+        icon={faFacebook}
+        size="xl"
+        style={{ color: "white" }}
+      />
+      <FontAwesomeIcon
+        className="m-2"
+        icon={faInstagram}
+        size="xl"
+        style={{ color: "white" }}
+      />
+      <FontAwesomeIcon
+        className="m-2"
+        icon={faTwitter}
+        size="xl"
+        style={{ color: "white" }}
+      />
+      <FontAwesomeIcon
+        className="m-2"
+        icon={faPhone}
+        size="xl"
+        style={{ color: "white" }}
+      />
+      <FontAwesomeIcon
+        className="m-2"
+        icon={faLinkedin}
+        size="xl"
+        style={{ color: "white" }}
+      />
+    </div>
   );
 };
 
-export default withRouter(Header);
+export default Header;

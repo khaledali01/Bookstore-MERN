@@ -17,6 +17,7 @@ import Profile from "./user/Profile";
 import ManageProducts from "./admin/ManageProducts";
 import UpdateProduct from "./admin/UpdateProduct";
 import UpdateCategory from "./admin/updateCategory";
+import Navbar from "./core/Navbar";
 import Header from "./core/Header";
 
 const Routing = () => {
@@ -24,6 +25,7 @@ const Routing = () => {
     <div>
       <BrowserRouter>
         <Header />
+        <Navbar />
         <Switch>
           <Route path="/" exact component={Shop} />
           <Route path="/shop" exact component={Shop} />
